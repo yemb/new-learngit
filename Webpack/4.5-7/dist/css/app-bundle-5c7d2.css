@@ -1,0 +1,72 @@
+body {
+  font-size: 40px;
+}
+
+:root {
+  --maincolor: green;
+}
+
+a {
+  color: var(--maincolor);
+}
+
+.bigbox {
+  background: yellowgreen;
+  width: 400px;
+  height: 400px;
+  color: #333;
+}
+
+.bigbox > div {
+  width: 64px;
+  height: 64px;
+  float: left;
+}
+
+.bigbox .ani1 {
+  background: url(assets/imgs/191f86-min.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.bigbox .ani2 {
+  background: url(assets/imgs/25e372-min.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.bigbox .ani3 {
+  background: url(assets/imgs/38905a-min.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.bigbox .ani4 {
+  background: url(assets/imgs/4b4a69-min.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.bigbox .ani5 {
+  background: url(assets/imgs/5028b9-min.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.bigbox .ani6 {
+  background: url(assets/imgs/6ac606-min.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.bigbox .ani7 {
+  background: url(assets/imgs/7bd239-min.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+body {
+  background: #ff3333;
+}
+
+.box {
+  height: 200px;
+  width: 200px;
+  border: 1px solid red;
+  border-radius: 20px;
+  background: #333;
+  transition: transform 1s;
+}

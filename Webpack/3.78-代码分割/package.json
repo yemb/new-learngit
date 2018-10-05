@@ -1,0 +1,17 @@
+{
+  "name": "3.78",
+  "version": "1.0.0",
+  "description": "3.56  打包公共代码\r webpack.optimize.CommonsChunkPlugin   (webpack3)\r ：\r 多entry的代码打包\r 分离业务代码 和 业务公共代码 和 第三方依赖 和 webpack自动生成代码",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "webpack": "^3.10.0"
+  }
+}
