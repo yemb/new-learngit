@@ -16,7 +16,9 @@ const defaultPlugin = [
             NODE_ENV: isDev ? '"development"' : '"production"'
         }
     }),
-    new HTMLPlugin(),
+    new HTMLPlugin({
+        template:path.join(__dirname,'template.html')
+    }),
     // new cleanPlugin('../dist')
 ]
 
@@ -27,6 +29,9 @@ const devServer = {
         errors: true // 有错误显示在网页
     },
     hot: true, // 热部署
+    historyApiFallback: {
+        index: '/index.html'
+    }
     // open: true // 打开游览器
 }
 
@@ -41,7 +46,7 @@ if (isDev) {
                     use: [
                         'vue-style-loader',
                         {
-                            loader:'css-loader',                        
+                            loader:'css-loader',
                             // options:{
                             //     module:true,             //webpack4已废除
                             //     localIdentName: isDev? '[path][name]-[local]-[hash:base64:5]':'[hash:base64:5]'
@@ -60,7 +65,7 @@ if (isDev) {
         },
         plugins: defaultPlugin.concat([
             new webpack.HotModuleReplacementPlugin(),
-            new webpack.NoEmitOnErrorsPlugin() 
+            new webpack.NoEmitOnErrorsPlugin()
         ])
     })
 } else {

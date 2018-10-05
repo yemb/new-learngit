@@ -9,7 +9,8 @@ const config = {
     entry: path.join(__dirname, '../client/index.js'),
     output: {
         filename: 'bundle.[hash:5].js',
-        path: path.join(__dirname, '../dist')
+        path: path.join(__dirname, '../dist'),
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -24,7 +25,7 @@ const config = {
                 loader: 'vue-loader',
                 options: createVueLoaderOptions(isDev)
                 // options: {
-                //     preserveWhitespace: true,         
+                //     preserveWhitespace: true,
                 //     extractCSS: true
                 // }
             },

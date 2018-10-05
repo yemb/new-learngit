@@ -8,10 +8,11 @@
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.config.client.js",
     "build": "npm run clean && npm run build:client",
     "clean": "rimraf dist",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
+    "dev": "npm run lint-fix && cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
     "lint": "eslint --ext .js --ext .jsx --ext .vue client/",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue client/",
-    "precommit" : "npm run lint-fix"
+    "precommit": "npm run lint-fix",
+    "practice": "eslint --fix --ext .js --ext .jsx --ext .vue practice/ && cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.practice.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,9 @@
   },
   "homepage": "https://github.com/imzyf/todo-by-vue-webpack#readme",
   "dependencies": {
-    "vue": "2.5.13"
+    "vue": "2.5.13",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "7.2.3",
@@ -32,6 +35,7 @@
     "babel-eslint": "^10.0.1",
     "babel-helper-vue-jsx-merge-props": "2.0.3",
     "babel-loader": "7.1.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-syntax-jsx": "6.18.0",
     "babel-plugin-transform-vue-jsx": "3.5.0",
     "babel-preset-env": "1.6.1",
