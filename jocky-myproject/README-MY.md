@@ -1,8 +1,8 @@
 1.目录结构
-    build:
-        webpack.config.js
-        webpack.config.base.js              公共代码
-        webpack.config.client.js            客户端
+build:
+webpack.config.js
+webpack.config.base.js 公共代码
+webpack.config.client.js 客户端
 
         webpack部分注意：
             webpack-merge，进行webpack代码的合并,合理合并webpack
@@ -24,16 +24,17 @@
     }
     注意修改文件中跟路径有关的url以及webpack中的配置
 
-*******************************************************************
-*******************************************************************
+****************************************************************************************************************
+****************************************************************************************************************
+****************************************************************************************************************
 
 2.vue-loader 配置
-    vue-loader.config.js       //module.exports 一个function，在webpack中才进行传参执行，返回需要的options配置项
-        return {
-            preserveWhitespace: true,       //把template中每行后面的空格去掉，防止对布局样式产生影响
-            extractCSS: !isDev,             //extract-text-webpack-plugin没办法把vue中的style打出来，用这个完成。提                                 高首屏加载速度
-                                            //在类中加入hash码，实现scoped
-            cssModule:{
+vue-loader.config.js //module.exports 一个 function，在 webpack 中才进行传参执行，返回需要的 options 配置项
+return {
+preserveWhitespace: true, //把 template 中每行后面的空格去掉，防止对布局样式产生影响
+extractCSS: !isDev, //extract-text-webpack-plugin 没办法把 vue 中的 style 打出来，用这个完成。提 高首屏加载速度
+//在类中加入 hash 码，实现 scoped
+cssModule:{
 
             }
             hotReload: false/true  //开发环境热重载，生成环境没有，会自动根据环境变量生成，一般不用设置
@@ -50,13 +51,14 @@
         rimraf在package.json中配置“rimraf dist” 每次会删除dist目录
         clean-webpack-plugin:   new CleanPlugin('dist')
 
-*******************************************************************
-*******************************************************************
+****************************************************************************************************************
+****************************************************************************************************************
+****************************************************************************************************************
 
-3.vue-loader中的 cssModules ，也可以在css-loader中定义：
+3.vue-loader 中的 cssModules ，也可以在 css-loader 中定义：
     {
-        localIdentName: '[path][name]-[local]-[hash:base64:5]',         //不重复，保密性好
-        camelCase: true,
+    localIdentName: '[path][name]-[local]-[hash:base64:5]', //不重复，保密性好
+    camelCase: true,
     }
 
     vue组件中的style 如 head-aaa会被编译成
@@ -64,8 +66,9 @@
             headAaa: '[path][name]-[local]-[hash:base64:5]'
         }
 
-*******************************************************************
-*******************************************************************
+****************************************************************************************************************
+****************************************************************************************************************
+****************************************************************************************************************
 
 4.eslint
     loaders:
@@ -75,7 +78,7 @@
         eslint-plugin-promise
         eslint-plugin-import
         eslint-plugin-node
-        eslint-plugin-html          //识别html，vue的格式类似于html。识别vue
+        eslint-plugin-html //识别 html，vue 的格式类似于 html。识别 vue
 
         eslint-loader               //webpack loader
         babel-eslint                //webpack loader ,这两个东西实现编译时就进行eslint校验和修正
@@ -112,8 +115,9 @@
         "precommit" : "npm run lint-fix",
     }
 
-*******************************************************************
-*******************************************************************
+****************************************************************************************************************
+****************************************************************************************************************
+****************************************************************************************************************
 
 5.vue.js 原理 （独立于项目）（app）
 
@@ -301,59 +305,60 @@
         第一个参数：标签名； 第二个参数：属性； 第三个属性：子节点或者字符串，子节点时需要用数组括起来。
         render createElement创建的就是一个VNODE，虚拟节点
 
+****************************************************************************************************************
+****************************************************************************************************************
+****************************************************************************************************************
 
-*******************************************************************
-*******************************************************************
+6.vue-router (开始跟项目有关了) （注释在项目文件中）
+    npm i vue-router -S
 
-6.vue-router    (开始跟项目有关了)  （注释在项目文件中）
-  npm i vue-router -S
+    知识分点：
+        1、vue-router 之集成
 
-  知识分点：
-    1、vue-router之集成
+        2、vue-router之配置
 
-    2、vue-router之配置
+        3、vue-router之路由参数传递
 
-    3、vue-router之路由参数传递
+        4、vue-router之导航守卫 (没在项目里写)
 
-    4、vue-router之导航守卫 (没在项目里写)
-  过程：
-    导航被触发。
-    在失活的组件里调用离开守卫。
-    调用全局的 beforeEach 守卫。
-    在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。
-    在路由配置里调用 beforeEnter。
-    解析异步路由组件。
-    在被激活的组件里调用 beforeRouteEnter。
-    调用全局的 beforeResolve 守卫 (2.5+)。
-    导航被确认。
-    调用全局的 afterEach 钩子。
-    触发 DOM 更新。
-    用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。
+    过程：
+        导航被触发。
+        在失活的组件里调用离开守卫。
+        调用全局的 beforeEach 守卫。
+        在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。
+        在路由配置里调用 beforeEnter。
+        解析异步路由组件。
+        在被激活的组件里调用 beforeRouteEnter。
+        调用全局的 beforeResolve 守卫 (2.5+)。
+        导航被确认。
+        调用全局的 afterEach 钩子。
+        触发 DOM 更新。
+        用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。
 
-  组件内钩子
-    beforeRouteEnter    当多个路由匹配同一个组件时，如 /app/:id，我们可以在这两个钩子中的next(vm=>XXX),回调函数更新id
-    beforeRouteUpdate
-    beforeRouteLeave    当离开时可以发出comfirm , 控制页面跳转
-                        if(window.comfirm('离开?')) { next() }
-    ！！ 多次在同一个组件中切换，mounted生命周期不会被触发，当需要进行数据的改变时，可以在路由钩子中的next() 回调中进行
+    组件内钩子
+        beforeRouteEnter 当多个路由匹配同一个组件时，如 /app/:id，我们可以在这两个钩子中的 next(vm=>XXX),回调函数更新 id
+        beforeRouteUpdate
+        beforeRouteLeave 当离开时可以发出 comfirm , 控制页面跳转
+        if(window.comfirm('离开?')) { next() }
+        ！！ 多次在同一个组件中切换，mounted 生命周期不会被触发，当需要进行数据的改变时，可以在路由钩子中的 next() 回调中进行
 
-  动态加载异步组件：( 结合webpack )
-    component: () => import('../views/todo/todo.vue')
-    这种语法需要安装一个babel插件   npm i babel-plugin-syntax-dynamic-import -D
-    然后在.babelrc中加入这个插件
+    动态加载异步组件：( 结合 webpack )
+        component: () => import('../views/todo/todo.vue')
+        这种语法需要安装一个 babel 插件 npm i babel-plugin-syntax-dynamic-import -D
+        然后在.babelrc 中加入这个插件
 
     目录结构：
         client/config/routes.js
         client/config/router.js
 
     路由动画:
-      <transition name="fade">
+        <transition name="fade">
         <router-view></router-view>
-      </transition>
+        </transition>
 
-      .fade-enter-active,.fade-leave-active
+        .fade-enter-active,.fade-leave-active
         transition opacity .5s
-      .fade-enter, .fade-leave-to
+        .fade-enter, .fade-leave-to
         opacity 0
 
     注意：
@@ -363,33 +368,56 @@
         提供了 this.$route,拿到params、path、query等等，
         或者在写路由时用props，把params作为props传入组件中，有多种写法
 
-7.vuex  (开始跟项目有关了)  （注释在项目文件中）
-  npm i vuex -S
-  知识点分：
-    1、vuex之集成
+****************************************************************************************************************
+****************************************************************************************************************
+****************************************************************************************************************
 
-    2、vuex之state和getters
+7.vuex (开始跟项目有关了) （注释在项目文件中）
 
-    3、vuex之mutation和action
+    npm i vuex -S
+    知识点分：
+        1、vuex 之集成
+        2、vuex之state和getters
+        3、vuex之mutation和action
+        4、vuex之模块
+        5、vuex之其他一些API和配置
+        6、核心概念：State
+                    Mutation
+                    Getter
+                    Action
+                    Module
 
-    4、vuex之模块
-
-    5、vuex之其他一些API和配置
-
-  目录结构：
-    /store/store.js
-    /store/
-    /store/
-    /store/
+    目录结构：
+        /store/store.js
+        /store/state/state.js
+        /store/mutations/mutations.js
+        /store/getters/getters.js                   全局的computed
 
 
-  Store:
-  
-  Mutation:
+    1、Vue.use(Vuex),把vuex注册到每个子组件中，不用在每个组件中导入，并把store传入为根变量$store,每个组件中通过        this.$store.xxx进行调用,通过this.$store.commit('mutations名'，参数)，进行state数据更新
 
-  Getter:
+    2、State && Getters：
+        ...mapState,...mapGetters  ,多种调用方法看官网
+        在babel-preset-env是不支持的，需要install babel-preset-stage-1 -D，并在.babelrc中配置
 
-  Action:
+    3、mutations && action :
+        mutations只有两个参数，第二个参数是一个数值或者对象，第一个参数是state
+        actions也只有两个参数，第二个参数是一个数值或者对象，第一个参数是store
+        可以显式修改this.$store.state.xxx,但是建议使用mutations对state数据进行修改操作
 
-  Module:
+        不同:{
+            mutations必须是同步操作，actions可以是异步的,一般数据请求或其他异步操作在actions
+        }
+
+
+    4、 mapState,mapGetters 都是实时改变根据数据，依赖数据，放在组件的computed中，
+        mapMutations,mapActions 都是方法，放在组件的methods中。
+        this.$store.dispatch 触发 actions
+        this.$store.commit 触发 mutations
+        this.$store.state.xxx
+        this.$store.getters.xxx
+
+    5、vuex modules && 加入 hotModuleReplacement    (store.js)
+    6
+        
 
